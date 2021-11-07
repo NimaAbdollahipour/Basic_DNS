@@ -1,0 +1,60 @@
+{
+   "root": {
+       "domains": {
+           "com-network.com": {
+               "ip": "192.168.1.103",
+               "port": "8080",
+               "domains": {
+                   "sub1.com-network.com": {
+                       "ip": "192.168.1.107",
+                       "port": "8080",
+                       "domains": {}
+                   },
+                   "sub2.com-network.com": {
+                       "ip": "192.168.1.109",
+                       "port": "8081",
+                       "domains": {}
+                   }
+               }
+           },
+           "articles.com": {
+               "ip": "192.168.1.101",
+               "port": "8080",
+               "domains": {
+                   "ee.articles.com": {
+                       "ip": "192.168.1.102",
+                       "port": "8080",
+                       "domains": {
+                           "elec.ee.articles.com":{
+                               "ip":"192.168.1.111",
+                               "port":"8090",
+                               "domains":{}
+                           }
+                       }
+                   },
+                   "ce.articles.com": {
+                       "ip": "192.168.1.104",
+                       "port": "8081",
+                       "domains": {}
+                   },
+                   "me.articles.com": {
+                       "ip": "192.168.1.106",
+                       "port": "8082",
+                       "domains": {}
+                   }
+               }
+           },
+           "news.com": {
+               "ip": "192.168.1.105",
+               "port": "8080",
+               "domains": {
+                   "tech.news.com": {
+                       "ip": "192.168.1.108",
+                       "port": "8080",
+                       "domains": {}
+                   }
+               }
+           }
+       }
+   }
+}
