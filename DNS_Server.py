@@ -1,12 +1,15 @@
 import json
 import socket
+import threading
 
 #Reading From JSON File and Converting to Dictionary------------------------------------------------------------------
-database=open("DNS_Database.json", "r+")
-dns_data=database.read()
-database.close()
-dns_dict = json.loads(dns_data)
-DNS_Data = dns_dict["root"]
+def read():
+    database=open("DNS_Database.json", "r+")
+    dns_data=database.read()
+    database.close()
+    dns_dict = json.loads(dns_data)
+    DNS_Data = dns_dict["root"]
+    return DNS_Data
 
 #Searching For Main Domain--------------------------------------------------------------------------------------------
 def search(name, DNS):
@@ -22,18 +25,24 @@ def search(name, DNS):
 
 #Creating Socket-------------------------------------------------------------------------------------------------------
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-ip = socket.gethostbyname(socket.gethostname())
-s.bind((ip,13345))
+ip = socket.gethostbyname('localhost')
+port = 15353
+s.bind((ip,port))
 
-#Listening To The Port and Responding----------------------------------------------------------------------------------
-while True:
-    data,addr = s.recvfrom(512)
+
+def respond(data,addr):
     print("["+str(addr)+"]"+str(data.decode("utf-8")))
     data = data.decode("utf-8")
     print(data)
     try:
-        msg = search(data,DNS_Data)
+        msg = search(data,read())
         msg = msg[0]+"  "+msg[1]
     except:
         msg = "Error!!!"
     s.sendto(msg.encode("utf-8"),addr)
+
+
+#Listening To The Port and Responding----------------------------------------------------------------------------------
+while True:
+    data,addr = s.recvfrom(512)
+    thread = threading.Thread(target=respond , args= (data ,addr))
