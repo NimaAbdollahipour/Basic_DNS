@@ -1,10 +1,10 @@
 import socket
 import threading
 
-HEADER = 64
-PORT = 18080
+HEADER = 512
+PORT = 8080
 #SERVER = "127.0.0.1"
-SERVER = socket.gethostbyname('localhost')
+SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER,PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MSG = "!DISCONNECT"
@@ -18,6 +18,9 @@ def handle_client(conn, addr):
     connected =True
     while connected:
         msg_length = conn.recv(HEADER).decode(FORMAT)
+        msg_length = (msg_length.split("Content-Length:"))[1]
+        msg_length = msg_length.strip()
+        msg_length = int(msg_length)
         if msg_length:
             msg_length = int(msg_length)
             msg = conn.recv(msg_length).decode(FORMAT)

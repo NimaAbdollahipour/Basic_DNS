@@ -25,18 +25,18 @@ def search(name, DNS):
 
 #Creating Socket-------------------------------------------------------------------------------------------------------
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-ip = socket.gethostbyname('localhost')
-port = 15353
+ip = socket.gethostbyname(socket.gethostname())
+port = 5353
 s.bind((ip,port))
 
-
+print("[SERVER IS STARTING...]")
 def respond(data,addr):
     print("["+str(addr)+"]"+str(data.decode("utf-8")))
     data = data.decode("utf-8")
     print(data)
     try:
         msg = search(data,read())
-        msg = msg[0]+"  "+msg[1]
+        msg = msg[0]+"%!@"+msg[1]
     except:
         msg = "Error!!!"
     s.sendto(msg.encode("utf-8"),addr)
